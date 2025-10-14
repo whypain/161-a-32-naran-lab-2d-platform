@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : IShootable
+public class Player : Character, IShootable
 {
     public void Jump()
     {
