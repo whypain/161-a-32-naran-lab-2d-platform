@@ -11,6 +11,4 @@ public abstract class Weapon : MonoBehaviour
     {
         return 0;
     }
-
-    
 }
