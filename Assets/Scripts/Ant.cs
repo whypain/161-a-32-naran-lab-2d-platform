@@ -4,9 +4,7 @@ public class Ant : Enemy
 {
     [SerializeField] private Transform[] movePoints;
     [SerializeField] private LayerMask point;
-    [SerializeField] private float checkRadius = 0.2f;
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float flipCooldown = 1f;
 
     private Vector2 velocity;
 
