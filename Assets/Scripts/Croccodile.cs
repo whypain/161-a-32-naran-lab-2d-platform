@@ -30,7 +30,7 @@ public class Croccodile : Enemy, IShootable
 
     private void Update()
     {
-        if (player != null) return;
+        if (player == null) return;
 
         dirToPlayer = transform.position - player.transform.position;
         Debug.Log($"Direction: {dirToPlayer}");
@@ -53,7 +53,6 @@ public class Croccodile : Enemy, IShootable
 
         if (distanceToPlayer <= attackRange)
         {
-            Debug.Log($"{player.name} is within attack range of {name}. Shooting!");
             Shoot();
         }
     }
@@ -71,8 +70,7 @@ public class Croccodile : Enemy, IShootable
 
         rock.Init(40, this);
 
-        Debug.Log(dirToPlayer);
-        rock.SetForce(new Vector2(9 * rock.GetShootDirection(), 10));
+        rock.SetForce(9 * rock.GetShootDirection(player.transform));
         rock.Move();
 
         Destroy(bullet, 5f);

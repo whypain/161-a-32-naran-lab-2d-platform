@@ -9,17 +9,11 @@ public class CharacterHealthbar : MonoBehaviour
     private Character character;
 
 
-    public void InitializePersistent(Character character)
+    public void Initialize(Character character, bool persistent)
     {
         this.character = character;
         character.onHealthChanged += OnHealthChanged;
-    }
-
-    public void InitializeCascade(Character character)
-    {
-        this.character = character;
-        character.onHealthChanged += OnHealthChanged;
-        character.onDeath += Dispose;
+        if (!persistent) character.onDeath += Dispose;
     }
 
     private void OnHealthChanged(float health01)

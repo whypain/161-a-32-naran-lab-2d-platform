@@ -12,6 +12,11 @@ public abstract class Character : MonoBehaviour
     protected Animator anim;
     protected Rigidbody2D rb;
 
+
+    [SerializeField] CharacterHealthbar healthbarPrefab;
+    [SerializeField] Transform healthbarParent;
+    [SerializeField] Vector3 healthbarOffset;
+    [SerializeField] bool persistentHealthbar;
     private int health;
     private int maxHealth;
     private float damageIFrame = 0.5f;
@@ -26,7 +31,12 @@ public abstract class Character : MonoBehaviour
         MaxHealth = startHealth;
         Health = MaxHealth;
 
-
+        if (healthbarPrefab != null)
+        {
+            CharacterHealthbar healthbar = Instantiate(healthbarPrefab, healthbarParent);
+            healthbar.Initialize(this, persistentHealthbar);
+            healthbar.transform.localPosition = healthbarOffset;
+        }
         Debug.Log($"{name} initialized with {Health} health");  
     }
 

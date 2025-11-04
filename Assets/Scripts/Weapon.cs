@@ -19,6 +19,11 @@ public abstract class Weapon : MonoBehaviour
         return Shooter.SpawnPoint.position.x - Shooter.SpawnPoint.parent.position.x > 0 ? 1 : -1;
     }
 
+    public Vector3 GetShootDirection(Transform target)
+    {
+        return (target.position - Shooter.SpawnPoint.position).normalized;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Character character = other.GetComponent<Character>();
