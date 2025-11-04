@@ -1,13 +1,19 @@
+using System;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    private int health;
-    public int Health { get => health; set => health = Mathf.Max(0, value); }
+    public int Health { get => health; set => health = Mathf.Clamp(Mathf.Max(0, value), 0, MaxHealth); }
+    public int MaxHealth { get => maxHealth; set => maxHealth = Mathf.Max(1, value); }
+    public float Health01 => (float)Health / (float)MaxHealth;
+    public Action<float> onHealthChanged;
+    public Action onDeath;
 
     protected Animator anim;
     protected Rigidbody2D rb;
 
+    private int health;
+    private int maxHealth;
     private float damageIFrame = 0.5f;
     private float tookDamageTimer = 0f;
     private bool isInvincible => tookDamageTimer > 0f;
@@ -17,7 +23,8 @@ public abstract class Character : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        Health = startHealth;
+        MaxHealth = startHealth;
+        Health = MaxHealth;
 
 
         Debug.Log($"{name} initialized with {Health} health");  
@@ -29,14 +36,15 @@ public abstract class Character : MonoBehaviour
         {
             Debug.Log($"{name}'s iframe is active and took no damage");
             return;
-        }       
+        }
 
         Health -= damage;
+        onHealthChanged?.Invoke(Health01);
         Debug.Log($"{name} took {damage} damage; currHealth: {Health}");
 
         tookDamageTimer = damageIFrame;
 
-        IsDead();
+        if (IsDead()) onDeath?.Invoke();
     }
     
     private void Update()
