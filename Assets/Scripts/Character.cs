@@ -1,4 +1,5 @@
 using System;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour
@@ -57,7 +58,7 @@ public abstract class Character : MonoBehaviour
         if (IsDead()) onDeath?.Invoke();
     }
     
-    private void Update()
+    protected virtual void Update()
     {
         if (tookDamageTimer > 0)
         {

@@ -25,6 +25,6 @@ public class Banana : Weapon
 
     public override void OnHitWith(Character character)
     {
-        throw new System.NotImplementedException();
+        character.TakeDamage(Damage);
     }
 }

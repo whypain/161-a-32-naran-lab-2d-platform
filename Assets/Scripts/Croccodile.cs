@@ -28,8 +28,9 @@ public class Croccodile : Enemy, IShootable
         player = FindFirstObjectByType<Player>();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (player == null) return;
 
         dirToPlayer = transform.position - player.transform.position;
@@ -81,7 +82,7 @@ public class Croccodile : Enemy, IShootable
     async void PlayAnim()
     {
         anim.SetTrigger("Shoot");
-        await Task.Delay(300);
+        await Task.Delay(100);
         anim.ResetTrigger("Shoot");
     }
 }
